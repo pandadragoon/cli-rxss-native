@@ -32,23 +32,36 @@ const IS_COMPONENT = program.generate === 'component' ||
                      program.generate === 'class-component:mobx';
 
 const TARGET = program.target && IS_COMPONENT  ? '/' + program.target + '/' : '';
+let canCreate = checkType(TARGET) ? true : invalidInput(TARGET);
 
 switch (program.generate) {
     case 'component':
-        checkType(TARGET);
-        createAsset('components', CAPITAL, TARGET, componentTemplate, specComponentTemplate);
+        
+        if(canCreate){
+            createAsset('components', CAPITAL, TARGET, componentTemplate, specComponentTemplate);
+        }
+        
         break;
     case 'component:mobx':
-        checkType(TARGET) ? null : invalidInput(TARGET) break;
-        createAsset('components', CAPITAL, TARGET, componentMobxTemplate, specComponentMobxTemplate);
+
+        if(canCreate){
+            createAsset('components', CAPITAL, TARGET, componentMobxTemplate, specComponentMobxTemplate);
+        }
+        
         break;
     case 'class-component':
-        checkType(TARGET) ? null : invalidInput(TARGET) break;
-        createAsset('components', CAPITAL, TARGET, classComponentTemplate, specComponentTemplate);
+
+        if(canCreate){
+            createAsset('components', CAPITAL, TARGET, classComponentTemplate, specComponentTemplate);
+        }
+        
         break;
     case 'class-component:mobx':
-        checkType(TARGET) ? null : invalidInput(TARGET) break;
-        createAsset('components', CAPITAL, TARGET, classComponentMobxTemplate, specComponentMobxTemplate);
+
+        if(canCreate){
+            createAsset('components', CAPITAL, TARGET, classComponentMobxTemplate, specComponentMobxTemplate);
+        }
+        
         break;
     case 'container':
         createAsset('containers', CAPITAL, TARGET, containerTemplate, specComponentTemplate);
@@ -74,9 +87,11 @@ function checkType(target) {
 
 /**
  * @param { string } target target folder for component
+ * @returns { boolean } false always false because hits error
  */
 function invalidInput(target) {
     console.error('INVALID TARGET: ', '"' + target + '"' + ' is not a valid target. -t or --target should be `ios`, `android`, or `shared`');
+    return false;
 }
 
 /**
