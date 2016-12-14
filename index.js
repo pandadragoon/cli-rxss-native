@@ -21,36 +21,62 @@ var utils = require('./utils');
 program
     .option('-g, --generate <type>, generate a new application element')
     .option('-n, --name <name>, name for new file')
+    .option('-t, --target <target>, target ios, android, or shared')
     .parse(process.argv)
 
 const LOWER = utils.snakeToCamelCase(program.name.toLowerCase());
 const CAPITAL = utils.toCapitalCase(LOWER);
+const IS_COMPONENT = program.generate === 'component' ||
+                     program.generate === 'component:mobx' ||
+                     program.generate === 'class-component' ||
+                     program.generate === 'class-component:mobx';
+
+const TARGET = program.target && IS_COMPONENT  ? '/' + program.target + '/' : '';
 
 switch (program.generate) {
     case 'component':
-        createAsset('components', CAPITAL, componentTemplate, specComponentTemplate);
+        checkType(TARGET);
+        createAsset('components', CAPITAL, TARGET, componentTemplate, specComponentTemplate);
         break;
     case 'component:mobx':
-        createAsset('components', CAPITAL, componentMobxTemplate, specComponentMobxTemplate);
+        checkType(TARGET) ? null : invalidInput(TARGET) break;
+        createAsset('components', CAPITAL, TARGET, componentMobxTemplate, specComponentMobxTemplate);
         break;
     case 'class-component':
-        createAsset('components', CAPITAL, classComponentTemplate, specComponentTemplate);
+        checkType(TARGET) ? null : invalidInput(TARGET) break;
+        createAsset('components', CAPITAL, TARGET, classComponentTemplate, specComponentTemplate);
         break;
     case 'class-component:mobx':
-        createAsset('components', CAPITAL, classComponentMobxTemplate, specComponentMobxTemplate);
+        checkType(TARGET) ? null : invalidInput(TARGET) break;
+        createAsset('components', CAPITAL, TARGET, classComponentMobxTemplate, specComponentMobxTemplate);
         break;
     case 'container':
-        createAsset('containers', CAPITAL, containerTemplate, specComponentTemplate);
+        createAsset('containers', CAPITAL, TARGET, containerTemplate, specComponentTemplate);
         break;
     case 'container:mobx':
-        createAsset('containers', CAPITAL, containerMobxTemplate, specComponentMobxTemplate);
+        createAsset('containers', CAPITAL, TARGET, containerMobxTemplate, specComponentMobxTemplate);
         break;
     case 'store':
-        createAsset('stores', LOWER + 'Store', storeTemplate, specStoreTemplate);
+        createAsset('stores', LOWER + 'Store', TARGET, storeTemplate, specStoreTemplate);
         break;
     default:
         console.error(program.generate + ' is not a valid element that can be created');
         break;
+}
+
+/**
+ * @param { string } target target folder for component
+ * @returns { boolean } false if empty string otherwise true if ios, android, or shared
+ */
+function checkType(target) {
+    return target === 'ios' || target === 'android' || target === 'shared';
+}
+
+/**
+ * @param { string } target target folder for component
+ */
+function invalidInput(target) {
+    console.error('INVALID TARGET: ', '"' + target + '"' + ' is not a valid target. -t or --target should be `ios`, `android`, or `shared`');
 }
 
 /**
@@ -59,8 +85,8 @@ switch (program.generate) {
  * @param { function } fileTemplate template for asset that returns a string template 
  * @param { function } specTemplate spec template for asset that returns a string template  
  */
-function createAsset(type, fileName, fileTemplate, specTemplate){
-    const assetPath = appRoot + '/src/' + type + '/' + fileName + '/';
+function createAsset(type, fileName, target, fileTemplate, specTemplate){
+    const assetPath = appRoot + '/src/' + type + '/' + target + fileName;
 
     // Only writes to pre-existing 
     try {

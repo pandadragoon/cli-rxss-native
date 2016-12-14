@@ -21,6 +21,10 @@ The rxss generator generates components, class-components, containers, & stores 
 
 ```rxss -g [type] -n [name]```
 
+If you are specifying a component you must also include ```-t [target]```
+
+The target can be ios, android, or shared.
+
 **The name must either be all lower case or snake-case-syntax in order to name the files properly**
 
 ### Available Types
