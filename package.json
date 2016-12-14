@@ -1,0 +1,18 @@
+{
+  "name": "cli-rxss",
+  "version": "1.0.0",
+  "description": "Cli for white-label native app",
+  "main": "index.js",
+  "author": "Joshua Edwards",
+  "url": "https://github.com/pandadragoon/cli-rxss",
+  "license": "MIT",
+  "dependencies": {
+    "app-root-path": "^2.0.1",
+    "commander": "^2.9.0",
+    "shelljs": "^0.7.5",
+    "yargs": "^6.5.0"
+  },
+  "bin": {
+    "rxss-native": "bin/execute.js"
+  }
+}
