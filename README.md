@@ -8,7 +8,14 @@ The rxss generator generates components, class-components, containers, & stores 
 . [project folder]
 +-- src
 | +-- components
+| | +-- android
+| | +-- ios 
+| | +-- shared
 | +-- containers 
+| +-- stores
++-- test
+| +-- components
+| +-- containers
 | +-- stores
 ```
 
@@ -21,7 +28,7 @@ The rxss generator generates components, class-components, containers, & stores 
 
 ```rxss -g [type] -n [name]```
 
-If you are specifying a component you must also include ```-t [target]```
+If you are specifying a component (i.e. not a container or store) you must also include ```-t [target]```
 
 The target can be ios, android, or shared.
 
