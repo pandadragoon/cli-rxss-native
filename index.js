@@ -32,7 +32,7 @@ const IS_COMPONENT = program.generate === 'component' ||
                      program.generate === 'class-component:mobx';
 
 const TARGET = program.target && IS_COMPONENT  ? '/' + program.target + '/' : '';
-let canCreate = checkType(TARGET) ? true : invalidInput(TARGET);
+let canCreate = checkType(program.target) && IS_COMPONENT ? true : invalidInput(TARGET);
 
 switch (program.generate) {
     case 'component':
