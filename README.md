@@ -21,12 +21,12 @@ The rxss generator generates components, class-components, containers, & stores 
 
 ### Installing
 
-``` npm -i cli-rxss -D ``` or ``` yarn add cli-rxss -D ```
-``` npm link cli-rxss ```
+``` npm i cli-rxss-native -D ``` or ``` yarn add cli-rxss-native -D ```
+``` npm i -g cli-rxss-native ```
 
 ### Commands
 
-```rxss -g [type] -n [name]```
+```rxss-native -g [type] -n [name]```
 
 If you are specifying a component (i.e. not a container or store) you must also include ```-t [target]```
 
