@@ -113,6 +113,10 @@ function createAsset(type, fileName, target, fileTemplate, specTemplate){
             fs.mkdirSync(appRoot + '/src/' + type + '/');
         }
 
+        if(!fs.existsSync(assetPath)){
+            fs.mkdirSync(assetPath);
+        }
+
         console.info(fileName + ' was successfully created!');
     } catch(err){
         console.error(err);
