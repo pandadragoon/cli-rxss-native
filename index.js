@@ -101,7 +101,7 @@ function invalidInput(target) {
  * @param { function } specTemplate spec template for asset that returns a string template  
  */
 function createAsset(type, fileName, target, fileTemplate, specTemplate){
-    const assetPath = appRoot + '/src/' + type + '/' + target + fileName;
+    const assetPath = appRoot + '/src/' + type + target + fileName;
 
     // Only writes to pre-existing 
     try {
