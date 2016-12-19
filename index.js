@@ -119,7 +119,7 @@ function createAsset(type, fileName, target, fileTemplate, specTemplate){
         console.error(`That ${type} already exists.  Delete existing file or choose another name.`);
     }
 
-    fs.writeFile(assetPath + '.js', fileTemplate(LOWER, CAPITAL), function(err){
+    fs.writeFile(assetPath + '/' + filename + '.js', fileTemplate(LOWER, CAPITAL), function(err){
         if(err){
             console.error(err);
         }
@@ -127,7 +127,7 @@ function createAsset(type, fileName, target, fileTemplate, specTemplate){
         console.info(`${fileName}.js was successfully created!`)
     });
 
-    fs.writeFile(appRoot + '/test/' + type + '/' + fileName + '.js', specTemplate(LOWER, CAPITAL), function(err){
+    fs.writeFile(assetPath + '/' + 'spec.js', specTemplate(LOWER, CAPITAL), function(err){
         if(err){
             console.error(err);
         }
